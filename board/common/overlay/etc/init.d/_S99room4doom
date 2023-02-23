@@ -1,0 +1,27 @@
+#!/bin/sh
+
+start() {
+	printf 'Loading ROOM4DOOM: '
+	#[ ! -d "/root/.config/room4doom" ] && mkdir -p /root/.config/room4doom/
+    #/usr/bin/room4doom --iwad /usr/share/games/doom/doom1.wad -f true -d false -w 320 -h 200 &
+    mkdir /tmp/wayland > /dev/null
+    /usr/bin/weston-launch --tty=/dev/tty7 -u root &
+    until [ -e /tmp/wayland/wayland-1 ]; do sleep 0.1; done;
+    WAYLAND_DISPLAY=wayland-1 XDG_RUNTIME_DIR=/tmp/wayland WINIT_UNIX_BACKEND=wayland HMI_FULLSCREEN=true /usr/bin/eframe_template &
+	status=$?
+	if [ "$status" -eq 0 ]; then
+		echo "OK"
+	else
+		echo "FAIL"
+	fi
+	return "$status"
+}
+
+case "$1" in
+	start)
+		"$1";;
+	*)
+		echo "Usage: $0 {start}"
+		exit 1
+esac
+

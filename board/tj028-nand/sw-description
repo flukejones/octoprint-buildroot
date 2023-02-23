@@ -1,0 +1,75 @@
+software = {
+	version = "0.1.0";
+	
+    hardware-compatibility: ["1.0"];
+    
+	tj028 = {
+	    rootfs = {
+	        rootfs1: {
+		        images: ({
+			        filename = "rootfs.ubifs";
+			        volume ="rootfs1";
+			        sha256 = <rootfs_sha256>;
+		        });
+		        bootenv: ({
+                    name = "bootvol";
+                    value = "rootfs1";
+                },
+                {
+                    name = "upgrade_available";
+                    value = "1";
+                });
+	        }
+	        rootfs2: {
+		        images: ({
+			        filename = "rootfs.ubifs";
+			        volume ="rootfs2";
+			        sha256 = <rootfs_sha256>;
+		        });
+		        bootenv: ({
+                    name = "bootvol";
+                    value = "rootfs2";
+                },
+                {
+                    name = "upgrade_available";
+                    value = "1";
+                });
+	        }
+	    }
+	    bootloader = {
+	        fsbl1 = {
+    	        images: ({
+                    filename = "tf-a-stm32mp157a-microgea-tj028.stm32";
+                    device = "/dev/mtd0";
+                    type = "flash";
+                    sha256 = <fsbl1_sha256>;
+                    properties: {
+                            always-remove = "true";
+                    }
+                });
+            }
+            fip = {
+                images: ({
+                    filename = "fip.bin";
+                    device = "/dev/mtd1";
+                    type = "flash";
+                    sha256 = <fip_sha256>;
+                    properties: {
+                            always-remove = "true";
+                    }
+                });
+            }
+            fip2 = {
+                images: ({
+                    filename = "fip.bin";
+                    device = "/dev/mtd2";
+                    type = "flash";
+                    sha256 = <fip_sha256>;
+                    properties: {
+                            always-remove = "true";
+                    }
+                });
+            }
+        }
+    }
+}

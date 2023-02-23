@@ -1,0 +1,37 @@
+From 415d155591d508b271312778ef6f1399bb0474e9 Mon Sep 17 00:00:00 2001
+From: Luca Faccin <luca.faccin@jteurope.com>
+Date: Wed, 13 Oct 2021 16:09:15 +0200
+Subject: [PATCH 2/2] Disabled RS485 from Uboot
+
+---
+ arch/arm/dts/stm32mp157a-microgea-tj028.dts | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
+
+diff --git a/arch/arm/dts/stm32mp157a-microgea-tj028.dts b/arch/arm/dts/stm32mp157a-microgea-tj028.dts
+index b37806156a..d3fbeb29f9 100644
+--- a/arch/arm/dts/stm32mp157a-microgea-tj028.dts
++++ b/arch/arm/dts/stm32mp157a-microgea-tj028.dts
+@@ -30,9 +30,9 @@
+ 		mmc1 = &sdmmc3;
+ 		serial0 = &uart4;
+ 		serial1 = &uart8; // DITER, on ICL3232CBNZ, DITER_TX1 and DITER_RX1
+-		serial2 = &usart3; // DITER Interface
++		//serial2 = &usart3; // Disabled RS-485 interface. Moved to the cortex M4 core
+ 		//serial3 = &uart7;
+-		serial3 = &usart1; // ttySTM0-4
++		serial2 = &usart1; // ttySTM0-4
+ 	};
+ 
+ 	clk_ext_audio_codec: clock-codec {
+@@ -453,7 +453,7 @@
+     pinctrl-names = "default";
+     pinctrl-0 = <&usart3_pins_mx>;
+     linux,rs485-enabled-at-boot-time;
+-    status = "okay";
++    status = "disabled";
+ };
+ 
+ /* Linux console */
+-- 
+2.32.0
+

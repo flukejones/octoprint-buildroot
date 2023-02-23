@@ -1,0 +1,32 @@
+From 32e388fc4bd08dc5a97633ebace08389c4578af9 Mon Sep 17 00:00:00 2001
+From: Luca Faccin <luca.faccin@jteurope.com>
+Date: Mon, 6 Dec 2021 14:47:13 +0100
+Subject: [PATCH 1/1] Fixed missing stm32mp15-ddr-512m-fw-config.dts
+
+---
+ fdts/stm32mp157a-microgea-tj028-fw-config.dts | 12 ++++--------
+ 1 file changed, 4 insertions(+), 8 deletions(-)
+
+diff --git a/fdts/stm32mp157a-microgea-tj028-fw-config.dts b/fdts/stm32mp157a-microgea-tj028-fw-config.dts
+index 600555812..d2be11aab 100644
+--- a/fdts/stm32mp157a-microgea-tj028-fw-config.dts
++++ b/fdts/stm32mp157a-microgea-tj028-fw-config.dts
+@@ -1,11 +1,7 @@
+-/* SPDX-License-Identifier: (GPL-2.0+ OR BSD-3-Clause) */
++// SPDX-License-Identifier: (GPL-2.0+ OR BSD-3-Clause)
+ /*
+- * Copyright (C) STMicroelectronics 2021 - All Rights Reserved
+- * Author: STM32CubeMX code generation for STMicroelectronics.
++ * Copyright (c) 2020, STMicroelectronics - All Rights Reserved
+  */
+ 
+-/* For more information on Device Tree configuration, please refer to
+- * https://wiki.st.com/stm32mpu/wiki/Category:Device_tree_configuration
+- */
+-
+-#include "stm32mp15-ddr-512m-fw-config.dts"
++#define DDR_SIZE	0x20000000 /* 512MB */
++#include "stm32mp15-fw-config.dts"
+-- 
+2.25.1
+

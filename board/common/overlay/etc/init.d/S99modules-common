@@ -1,0 +1,22 @@
+#!/bin/sh
+
+start() {
+	printf 'Loading common modules: '
+	/usr/sbin/modprobe stmmac
+	status=$?
+	if [ "$status" -eq 0 ]; then
+		echo "OK"
+	else
+		echo "FAIL"
+	fi
+	return "$status"
+}
+
+case "$1" in
+	start)
+		"$1";;
+	*)
+		echo "Usage: $0 {start}"
+		exit 1
+esac
+

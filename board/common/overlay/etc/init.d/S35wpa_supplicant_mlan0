@@ -1,0 +1,57 @@
+#!/bin/sh
+
+DAEMON="wpa_supplicant"
+PIDFILE="/var/run/$DAEMON.pid"
+
+start() {
+	printf 'Starting %s: ' "$DAEMON"
+	if [ ! -f /user_data/wpa_supplicant-mlan0.conf ]; then cp /etc/wpa_supplicant-mlan0.conf /user_data/wpa_supplicant-mlan0.conf; fi
+	until [ -d /sys/class/net/mlan0 ]; do sleep 1; done
+	/usr/sbin/wpa_supplicant -P "$PIDFILE" -B -i mlan0 -c /user_data/wpa_supplicant-mlan0.conf
+	status=$?
+	if [ "$status" -eq 0 ]; then
+		echo "OK"
+	else
+		echo "FAIL"
+	fi
+	return "$status"
+}
+
+stop() {
+	printf 'Stopping %s: ' "$DAEMON"
+	start-stop-daemon -K -q -p "$PIDFILE"
+	status=$?
+	if [ "$status" -eq 0 ]; then
+		echo "OK"
+	else
+		echo "FAIL"
+	fi
+	return "$status"
+}
+
+restart() {
+	stop
+	sleep 1
+	start
+}
+
+reload() {
+	printf 'Reloading %s: ' "$DAEMON"
+	start-stop-daemon -K -s HUP -q -p "$PIDFILE"
+	status=$?
+	if [ "$status" -eq 0 ]; then
+		echo "OK"
+	else
+		echo "FAIL"
+	fi
+	return "$status"
+}
+
+case "$1" in
+	start|stop|restart|reload)
+		"$1";;
+	*)
+		echo "Usage: $0 {start|stop|restart|reload}"
+		exit 1
+esac
+

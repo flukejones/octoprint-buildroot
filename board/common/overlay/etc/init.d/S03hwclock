@@ -1,0 +1,35 @@
+#!/bin/sh
+DEVICE=/dev/rtc0
+SYSLOGD_ARGS=""
+
+# Start the service
+start() {
+    echo "Sync time from RTC $DEVICE"
+    hwclock -u -s -f "$DEVICE"
+    echo "OK"
+    return "0"
+}
+
+stop() {
+	echo "Sync time to hwclock' $DEVICE"
+	hwclock -u -w -f "$DEVICE"
+	echo "OK"
+	return "0"
+}
+
+restart() {
+	stop
+	sleep 1
+	start
+}
+
+case "$1" in
+	start|stop|restart)
+		"$1";;
+	reload)
+		# Restart, since there is no true "reload" feature.
+		restart;;
+	*)
+		echo "Usage: $0 {start|stop|restart|reload}"
+		exit 1
+esac

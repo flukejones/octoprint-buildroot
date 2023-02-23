@@ -1,0 +1,36 @@
+From 3cafd7910c21c08157d9ecca7b2d97916182ece9 Mon Sep 17 00:00:00 2001
+From: Luca Faccin <luca.faccin@jteurope.com>
+Date: Wed, 13 Oct 2021 16:17:03 +0200
+Subject: [PATCH 2/2] Moved RS-485 (USART3) to M4 core
+
+---
+ fdts/stm32mp157a-microgea-tj028.dts | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
+
+diff --git a/fdts/stm32mp157a-microgea-tj028.dts b/fdts/stm32mp157a-microgea-tj028.dts
+index bda987687..cb71ea5e6 100644
+--- a/fdts/stm32mp157a-microgea-tj028.dts
++++ b/fdts/stm32mp157a-microgea-tj028.dts
+@@ -21,8 +21,8 @@
+ 
+     aliases {
+ 	    serial0 = &uart4;
+-	    serial1 = &usart3;
+-	    serial2 = &uart7;
++		//serial1 = &usart3; //Disabled RS-485 from TF-A
++	    serial1 = &uart7;
+     };
+ 
+ 	chosen {
+@@ -179,7 +179,7 @@
+ 	st,decprot = <
+ 	/*"Non Secured" peripherals*/
+ 	DECPROT(STM32MP1_ETZPC_USART1_ID, DECPROT_NS_RW, DECPROT_UNLOCK)
+-	DECPROT(STM32MP1_ETZPC_USART3_ID, DECPROT_NS_RW, DECPROT_UNLOCK)
++	DECPROT(STM32MP1_ETZPC_USART3_ID, DECPROT_MCU_ISOLATION, DECPROT_UNLOCK)
+ 	DECPROT(STM32MP1_ETZPC_UART4_ID, DECPROT_NS_RW, DECPROT_UNLOCK)
+ 	DECPROT(STM32MP1_ETZPC_UART7_ID, DECPROT_NS_RW, DECPROT_UNLOCK)
+ 	DECPROT(STM32MP1_ETZPC_UART8_ID, DECPROT_NS_RW, DECPROT_UNLOCK)
+-- 
+2.32.0
+

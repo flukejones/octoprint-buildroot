@@ -1,0 +1,52 @@
+#silent=1
+dist_vendor=jte
+env_check=if env info -p -d -q; then env save; fi
+bootcmd=run env_check; run bootcmd_ext
+bootdelay=0
+autoload=no
+preboot=
+loadaddr=0xc2000000
+arch=arm
+cpu=armv7
+board=stm32mp1
+board_name=tj028
+soc=stm32mp
+kernel_addr_r=0xc2000000
+fdt_addr_r=0xc4000000
+scriptaddr=0xc4100000
+splashimage=0xc4300000
+ramdisk_addr_r=0xc4400000
+# mtdparts=nand0:2m(fsbl),4m(fip1),4m(fip2),-(UBI)
+altbootcmd=run switch_to_backup; run bootcmd_ext
+
+# If bootcount is not reset by booting successfully then altbootcmd runs
+bootlimit=1
+bootpart=UBI
+bootvol=rootfs1
+# Mount FS
+ubi part UBI
+
+# Volumes are switched on upgrade. If altbootcmd runs then revert to previous volume
+# The volume that is booted while bootcount > 1 && upgrade_available == 1 is the working
+# volume which means the opposite volume is the failed volume
+swap_boot=if test ${bootvol} = rootfs1; \
+  then env set bootvol rootfs2; \
+  else env set bootvol rootfs1; \
+  fi
+
+switch_to_backup=if test -n ${failed_vol}; \
+  then echo "Upgrade failed, switching to backup"; \
+  run swap_boot; \
+  env save; \
+  fi
+
+# bootcmd_ext=ubifsmount ubi0:${bootvol}; sysboot ubi 0:${bootvol} any ${scriptaddr} /boot/extlinux/extlinux.conf
+dtb=/boot/stm32mp157a-microgea-tj028.dtb
+setargs=setenv bootargs ubi.mtd=UBI root=ubi0:${bootvol} rootfstype=ubifs rootwait rw pty.legacy_count=0 quiet loglevel=3 vt.global_cursor_default=0 fbcon=logo-pos:center fbcon=logo-count:1 console=ttySTM0,115200;
+
+bootcmd_ext=\
+ run setargs;\
+ ubifsmount ubi0:${bootvol};\
+ ubifsload ${fdt_addr_r} ${dtb};\
+ ubifsload ${loadaddr} /boot/zImage;\
+ bootz ${loadaddr} - ${fdt_addr_r}
