@@ -1,0 +1,8 @@
+config BR2_PACKAGE_PYTHON_ZEROCONF_0_33
+	bool "python-zeroconf_0_33"
+	select BR2_PACKAGE_PYTHON_IFADDR # runtime
+	help
+	  Pure Python Multicast DNS Service Discovery Library
+	  (Bonjour/Avahi compatible).
+
+	  https://github.com/jstasiak/python-zeroconf

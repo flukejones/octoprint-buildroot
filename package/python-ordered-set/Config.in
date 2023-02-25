@@ -1,0 +1,4 @@
+config BR2_PACKAGE_PYTHON_ORDERED_SET
+	bool "python-ordered-set"
+	help
+	  Huh
