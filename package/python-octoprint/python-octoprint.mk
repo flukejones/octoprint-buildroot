@@ -11,4 +11,9 @@ PYTHON_OCTOPRINT_SETUP_TYPE = setuptools
 PYTHON_OCTOPRINT_LICENSE = GNU Affero General Public License v3
 PYTHON_OCTOPRINT_LICENSE_FILES = LICENSE.txt
 
+define PYTHON_OCTOPRINT_USERS
+	foo -1 bar -1 !=blabla /home/foo /bin/sh alpha,bravo Foo user
+	octoprint -1 octoprint -1 =octoprint /home/octoprint /bin/sh - -
+endef
+
 $(eval $(python-package))

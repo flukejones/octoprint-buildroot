@@ -12,7 +12,6 @@ BR2_GCC_ENABLE_LTO=y
 BR2_GCC_ENABLE_GRAPHITE=y
 BR2_TARGET_OPTIMIZATION="-fpic -feliminate-dwarf2-dups -funroll-loops -fomit-frame-pointer -frename-registers"
 BR2_ROOTFS_DEVICE_CREATION_DYNAMIC_MDEV=y
-BR2_ROOTFS_USERS_TABLES="$(BR2_EXTERNAL_OCTOPRINT_PATH)/board/common/octoprint/users"
 BR2_ROOTFS_OVERLAY="$(BR2_EXTERNAL_OCTOPRINT_PATH)/board/common/overlay/ $(BR2_EXTERNAL_OCTOPRINT_PATH)/board/stm32mp157c-dk2/overlay/"
 BR2_ROOTFS_POST_IMAGE_SCRIPT="board/stmicroelectronics/common/stm32mp157/post-image.sh"
 BR2_LINUX_KERNEL=y
