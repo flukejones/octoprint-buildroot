@@ -1,6 +1,0 @@
-config BR2_PACKAGE_PYTHON_FLASK_LIMITER
-	bool "python-flask-limiter"
-	select BR2_PACKAGE_PYTHON_FLASK # runtime
-	select BR2_PACKAGE_PYTHON_WEBASSETS # runtime
-	help
-	  Yep

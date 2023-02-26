@@ -1,4 +1,0 @@
-config BR2_PACKAGE_PYTHON_COMMONMARK
-	bool "python-commonmark"
-	help
-	  commonmark

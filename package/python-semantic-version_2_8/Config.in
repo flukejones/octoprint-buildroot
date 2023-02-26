@@ -1,4 +1,0 @@
-config BR2_PACKAGE_PYTHON_SEMANTIC_VERSION_2_8
-	bool "python-semantic-version_2_8"
-	help
-	  Nerp.

@@ -1,6 +1,0 @@
-config BR2_PACKAGE_PYTHON_FLASK_LOGIN_0_5
-	bool "python-flask-login_0_5"
-	# runtime dependency
-	select BR2_PACKAGE_PYTHON_FLASK
-	help
-	  Flask-Login
